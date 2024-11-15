@@ -3,7 +3,7 @@ Create a weather forecast site using the Visual Crossing API.
 
 # Requirements
 - Have the ability to search for a specific location (Done)
-- Toggle displaying the data in Fahrenheit or Celsius
+- Toggle displaying the data in Fahrenheit or Celsius (Done)
 - Change the look of the page based on weather data (change color of background, add images that describe weather, maybe use Giphy API to find appropriate weather-related gifs and display them)
 
 # Steps
