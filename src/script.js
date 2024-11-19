@@ -12,15 +12,18 @@ import wind from "./images/wind.jpg";
 async function getWeather(location) {
   try {
     const toggle = document.querySelector(".toggle");
-    
+
     let unit;
     if (toggle.value == "f") {
       unit = "unitGroup=us";
     } else {
       unit = "unitGroup=uk";
     }
-    
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?${unit}&key=M946UUHWEQHTTPVLK3GCKTAQ8`, {mode: "cors"});
+
+    const response = await fetch(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?${unit}&key=M946UUHWEQHTTPVLK3GCKTAQ8`,
+      { mode: "cors" },
+    );
     const weatherData = await response.json();
 
     function setBackgroundImage() {
@@ -39,7 +42,7 @@ async function getWeather(location) {
         image.src = partlyCloudyNight;
       } else if (weatherData.currentConditions.icon == "rain") {
         image.src = rain;
-      } else if (weatherData.currentConditions.icon = "snow") {
+      } else if (weatherData.currentConditions.icon == "snow") {
         image.src = snow;
       } else if (weatherData.currentConditions.icon == "wind") {
         image.src = wind;
@@ -92,7 +95,7 @@ const submit = document.querySelector(".submit");
 toggle.addEventListener("click", function (e) {
   e.preventDefault();
   if (toggle.textContent == "F°") {
-    toggle.textContent = "C°"
+    toggle.textContent = "C°";
     toggle.value = "c";
   } else {
     toggle.textContent = "F°";
