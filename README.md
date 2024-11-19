@@ -13,4 +13,3 @@ Create a weather forecast site using the Visual Crossing API.
 4. Set up a form that will let users input their location and will fetch the weather info (still just console.log() it). (Done)
 5. Display the information on your webpage! (Done)
 6. Add any styling you like! (Done)
-7. Optional: add a ‘loading’ component that displays from the time the form is submitted until the information comes back from the API. Use DevTools to test for low-end devices.
