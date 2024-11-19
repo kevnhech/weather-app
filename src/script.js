@@ -10,73 +10,77 @@ import snow from "./images/snow.jpg";
 import wind from "./images/wind.jpg";
 
 async function getWeather(location) {
-  const toggle = document.querySelector(".toggle");
-  let unit;
-
-  if (toggle.value == "f") {
-    unit = "unitGroup=us";
-  } else {
-    unit = "unitGroup=uk";
-  }
-  
-  const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?${unit}&key=M946UUHWEQHTTPVLK3GCKTAQ8`, {mode: "cors"});
-  const weatherData = await response.json();
-
-  function setBackgroundImage() {
-    const image = document.createElement("img");
-    if (weatherData.currentConditions.icon == "clear-day") {
-      image.src = clearDay;
-    } else if (weatherData.currentConditions.icon == "clear-night") {
-      image.src = clearNight;
-    } else if (weatherData.currentConditions.icon == "cloudy") {
-      image.src = cloudy;
-    } else if (weatherData.currentConditions.icon == "fog") {
-      image.src = fog;
-    } else if (weatherData.currentConditions.icon == "partly-cloudy-day") {
-      image.src = partlyCloudyDay;
-    } else if (weatherData.currentConditions.icon == "partly-cloudy-night") {
-      image.src = partlyCloudyNight;
-    } else if (weatherData.currentConditions.icon == "rain") {
-      image.src = rain;
-    } else if (weatherData.currentConditions.icon = "snow") {
-      image.src = snow;
-    } else if (weatherData.currentConditions.icon == "wind") {
-      image.src = wind;
+  try {
+    const toggle = document.querySelector(".toggle");
+    
+    let unit;
+    if (toggle.value == "f") {
+      unit = "unitGroup=us";
+    } else {
+      unit = "unitGroup=uk";
     }
-    body.style.backgroundImage = `url(${image.src})`;
+    
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?${unit}&key=M946UUHWEQHTTPVLK3GCKTAQ8`, {mode: "cors"});
+    const weatherData = await response.json();
+
+    function setBackgroundImage() {
+      const image = document.createElement("img");
+      if (weatherData.currentConditions.icon == "clear-day") {
+        image.src = clearDay;
+      } else if (weatherData.currentConditions.icon == "clear-night") {
+        image.src = clearNight;
+      } else if (weatherData.currentConditions.icon == "cloudy") {
+        image.src = cloudy;
+      } else if (weatherData.currentConditions.icon == "fog") {
+        image.src = fog;
+      } else if (weatherData.currentConditions.icon == "partly-cloudy-day") {
+        image.src = partlyCloudyDay;
+      } else if (weatherData.currentConditions.icon == "partly-cloudy-night") {
+        image.src = partlyCloudyNight;
+      } else if (weatherData.currentConditions.icon == "rain") {
+        image.src = rain;
+      } else if (weatherData.currentConditions.icon = "snow") {
+        image.src = snow;
+      } else if (weatherData.currentConditions.icon == "wind") {
+        image.src = wind;
+      }
+      body.style.backgroundImage = `url(${image.src})`;
+    }
+
+    const obj = {
+      address: weatherData.resolvedAddress.split(",")[0],
+      temperature: weatherData.currentConditions.feelslike,
+      description: weatherData.currentConditions.conditions,
+    };
+
+    // Display weather information on page
+
+    const body = document.querySelector("body");
+    const weatherInfo = document.createElement("div");
+    weatherInfo.setAttribute("class", "weather-info");
+    const address = document.createElement("p");
+    const temperature = document.createElement("p");
+    const description = document.createElement("p");
+
+    address.textContent = obj.address;
+
+    if (toggle.value == "f") {
+      temperature.textContent = `${obj.temperature} F°`;
+    } else {
+      temperature.textContent = `${obj.temperature} C°`;
+    }
+
+    description.textContent = obj.description;
+
+    weatherInfo.appendChild(address);
+    weatherInfo.appendChild(temperature);
+    weatherInfo.appendChild(description);
+
+    body.appendChild(weatherInfo);
+    setBackgroundImage();
+  } catch (err) {
+    alert(err);
   }
-  console.log(weatherData.currentConditions.icon);
-  const obj = {
-    address: weatherData.resolvedAddress.split(",")[0],
-    temperature: weatherData.currentConditions.feelslike,
-    description: weatherData.currentConditions.conditions,
-  };
-
-  // Display weather information on page
-
-  const body = document.querySelector("body");
-  const weatherInfo = document.createElement("div");
-  weatherInfo.setAttribute("class", "weather-info");
-  const address = document.createElement("p");
-  const temperature = document.createElement("p");
-  const description = document.createElement("p");
-
-  address.textContent = obj.address;
-
-  if (toggle.value == "f") {
-    temperature.textContent = `${obj.temperature} F°`;
-  } else {
-    temperature.textContent = `${obj.temperature} C°`;
-  }
-
-  description.textContent = obj.description;
-
-  weatherInfo.appendChild(address);
-  weatherInfo.appendChild(temperature);
-  weatherInfo.appendChild(description);
-
-  body.appendChild(weatherInfo);
-  setBackgroundImage();
 }
 
 getWeather("Las Vegas");
@@ -103,6 +107,3 @@ submit.addEventListener("click", function (e) {
   getWeather(cityInput.value);
   cityInput.value = "";
 });
-
-// fahrenheit = "unitGroup=us&"
-// celsius = "unitGroup=uk&"

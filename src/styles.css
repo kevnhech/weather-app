@@ -22,6 +22,29 @@ p {
   font-size: 24px;
 }
 
+::placeholder {
+  color: #999;
+}
+
+#city,
+.toggle,
+.submit {
+  border-radius: 16px;
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.toggle,
+.submit {
+  cursor: pointer;
+}
+
+#city:focus-visible {
+  outline: none;
+}
+
 .weather-info {
   display: flex;
   flex-direction: column;
